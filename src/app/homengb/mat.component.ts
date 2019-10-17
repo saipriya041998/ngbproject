@@ -26,14 +26,19 @@ pageshow:boolean=false;
 kbase:FormGroup;
 closeResult:string;
 catarr:Ddlcategory[];
+show = false;
+autohide = true;
+show1 = false;
+autohide1=true;
   constructor(private fb:FormBuilder,private data:ArtserService,private modalService:NgbModal,private config:NgbModalConfig) {
     config.backdrop='static';
     config.keyboard=false;
   }
   ngOnInit() {
+    this.getArticles();
     this.kbase=this.fb.group({
       articleId:new FormControl(),
-      articleName:new FormControl(null,Validators.pattern('[a-zA-Z]*')),
+      articleName:new FormControl(null,Validators.pattern('[ a-zA-Z]*')),
       content:new FormControl(),
       previewContent:new FormControl(),
       categoryId:new FormControl(),
@@ -45,16 +50,20 @@ catarr:Ddlcategory[];
       modifiedByName: new FormControl(),
       modifiedDate:new FormControl()
     });
-
-    this.getArticles();
     this.getPageInfo();
+    this.getcat();
   }
-  getArticles(){
+  getArticles() {
     this.data.getAllKbArticles().subscribe(
       (data:Kbarticle[])=>{
         this.art=data;
         this.allart=this.art['kbArticles'];
         this.pageshow=true;
+      },function(error){
+        alert('');
+        this.show1=true;
+      },function(){
+
       }
     );
   }
@@ -110,7 +119,6 @@ catarr:Ddlcategory[];
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-
   }
   openAdd(addpop){
     this.modalService.open(addpop, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -123,7 +131,20 @@ catarr:Ddlcategory[];
     this.data.getcategories().subscribe(
       (data:any)=>{
         this.catarr=data;
+        console.log(this.catarr);
       }
+    );
+  }
+  onadd(item){
+    this.data.insertrecord(item).subscribe(
+      (data:any)=>{
+        this.getArticles();
+        this.show=true;
+        this.modalService.dismissAll();
+      },function(error){
+
+      },
+      function(){}
     );
   }
 }

@@ -5,6 +5,12 @@
                 <ngb-tab>
                   <ng-template  ngbTabTitle>Home</ng-template>
                   <ng-template ngbTabContent>
+                      <ngb-toast *ngIf="show1" class='bg-danger text-light' [delay]="3000" [autohide]="autohide1" (mouseenter)="autohide1 = false" (mouseleave)="autohide1 = true"
+                      (hide)="show1 = false; autohide1 = true" >
+                      <div *ngIf="autohide1">
+                        Something went wrong
+                      </div>
+                      </ngb-toast>
                       <ngb-carousel #carousel interval="2000" >
                           <ng-template ngbSlide *ngFor="let img of images; index as i">
                             <div class="carousel-caption">
@@ -53,7 +59,12 @@
                       <div class="container-fluid">
                           <button class="btn-primary pull-right" (click)="openAdd(addpop)" ngbButton>Add Article</button>
                       </div>
-
+                      <ngb-toast *ngIf="show" class='bg-success text-light' [delay]="3000" [autohide]="autohide" (mouseenter)="autohide = false" (mouseleave)="autohide = true"
+  (hide)="show = false; autohide = true" [class.bg-warning]="!autohide">
+  <div *ngIf="autohide">
+    Record is added
+  </div>
+</ngb-toast>
                       <table class="table table-striped">
                           <thead>
                               <tr>
@@ -76,7 +87,7 @@
                                 <td>{{item.categoryName }}</td>
                                 <td>{{item.createdDate }}</td>
                                 <td><button class="btn-primary" (click)="openEdit(editpop,item)" ngbButton>Edit</button></td>
-                                <td><button class="btn-secondary" (click)="readmore(content,item)" ngbButton>Read Article</button></td>
+                                <td><button class="btn-dark" (click)="readmore(content,item)" ngbButton>Read Article</button></td>
                               </tr>
                           </tbody>
                         </table>
@@ -144,7 +155,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-outline-primary" (click)="modal.close('Cross click')">Submit</button>
+          <button type="submit" class="btn btn-outline-primary">Submit</button>
           <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cross click')">Close</button>
         </div>
       </form>
@@ -160,16 +171,14 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form class="container" [formGroup]="kbase">
+          <form class="container" [formGroup]="kbase" (ngSubmit)="onadd(kbase.value)">
           <div class="modal-body">
               <div class="form-group">
                 <label><b>Article name</b></label>
                 <div class="input-group">
                   <input class="form-control" formControlName="articleName">
-
-  <button *ngIf="kbase.get('articleName').hasError('pattern') && !kbase.get('articleName').pristine" type="button" class="btn btn-outline-secondary mr-2" placement="top" ngbTooltip="Tooltip on top">
-                      Tooltip on top
-                    </button>
+                  <button *ngIf="kbase.get('articleName').hasError('pattern') && !kbase.get('articleName').pristine" type="button" class="btn btn-outline-secondary mr-2" placement="top" ngbTooltip="Tooltip on top">
+                      Tooltip on top</button>
                 </div>
                 <label><b>Category</b></label>
                 <div class="input-group">
@@ -186,7 +195,7 @@
               </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-outline-primary" (click)="modal.close('Cross click')">Submit</button>
+            <button type="submit" class="btn btn-outline-primary" >Submit</button>
             <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cross click')">Close</button>
           </div>
         </form>

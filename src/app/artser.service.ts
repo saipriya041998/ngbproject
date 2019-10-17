@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { appconstant } from './app.constant';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class ArtserService {
   page_url=appconstant.api+'GetArticles?getall=0&categ=&Page=';
   readmore_url=appconstant.api+'GetReadArticle?ArticleId=';
   getcateg=appconstant.api +'GetCategories';
+  add_article= appconstant.api+'InsertUpdateKBAricles';
   concat:string;
   constructor(private http:HttpClient) { }
   getAllKbArticles(){
@@ -24,5 +25,10 @@ export class ArtserService {
   }
   getcategories(){
     return this.http.get(this.getcateg);
+  }
+  insertrecord(item){
+    let body=JSON.stringify(item);
+    let head=new HttpHeaders().set('Content-Type','application/json');
+    return this.http.post(this.add_article,body, {headers:head});
   }
 }
