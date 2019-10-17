@@ -30,6 +30,8 @@ show = false;
 autohide = true;
 show1 = false;
 autohide1=true;
+show2=false;
+autohide2=true;
   constructor(private fb:FormBuilder,private data:ArtserService,private modalService:NgbModal,private config:NgbModalConfig) {
     config.backdrop='static';
     config.keyboard=false;
@@ -60,10 +62,8 @@ autohide1=true;
         this.allart=this.art['kbArticles'];
         this.pageshow=true;
       },function(error){
-        alert('');
-        this.show1=true;
+        this.show2=true;
       },function(){
-
       }
     );
   }
@@ -119,6 +119,11 @@ autohide1=true;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+    this.kbase.patchValue({
+      articleName:item.articleName,
+      categoryId:item.categoryId,
+      content:item.content
+    });
   }
   openAdd(addpop){
     this.modalService.open(addpop, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -142,9 +147,20 @@ autohide1=true;
         this.show=true;
         this.modalService.dismissAll();
       },function(error){
-
       },
       function(){}
     );
+  }
+  articleSave(item){
+    console.log(item);
+    this.data.updateuser(item).subscribe(
+    (data:any)=>{
+      this.art=data;
+      this.allart=this.art['kbArticles'];
+      this.show1=true;
+      this.getArticles();
+      this.modalService.dismissAll();
+    }
+  );
   }
 }

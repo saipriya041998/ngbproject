@@ -5,11 +5,10 @@
                 <ngb-tab>
                   <ng-template  ngbTabTitle>Home</ng-template>
                   <ng-template ngbTabContent>
-                      <ngb-toast *ngIf="show1" class='bg-danger text-light' [delay]="3000" [autohide]="autohide1" (mouseenter)="autohide1 = false" (mouseleave)="autohide1 = true"
-                      (hide)="show1 = false; autohide1 = true" >
-                      <div *ngIf="autohide1">
-                        Something went wrong
-                      </div>
+                      <ngb-toast *ngIf="show2" class='bg-danger text-light' [delay]="3000" [autohide]="autohide2" (hide)="show2 = false; autohide2 = true" >
+                          <div *ngIf="autohide2">
+                            Somthing Went Wrong
+                          </div>
                       </ngb-toast>
                       <ngb-carousel #carousel interval="2000" >
                           <ng-template ngbSlide *ngFor="let img of images; index as i">
@@ -51,6 +50,7 @@
 
                   <ng-template ngbTabContent>
                       <br>
+
                       <!-- <form>
                           <div class="form-group form-inline">
                               Full text search: <input class="form-control ml-2"  type="text" />
@@ -59,11 +59,16 @@
                       <div class="container-fluid">
                           <button class="btn-primary pull-right" (click)="openAdd(addpop)" ngbButton>Add Article</button>
                       </div>
-                      <ngb-toast *ngIf="show" class='bg-success text-light' [delay]="3000" [autohide]="autohide" (mouseenter)="autohide = false" (mouseleave)="autohide = true"
+                      <ngb-toast *ngIf="show" class='bg-success text-light' [delay]="3000" [autohide]="autohide"
   (hide)="show = false; autohide = true" [class.bg-warning]="!autohide">
   <div *ngIf="autohide">
     Record is added
   </div>
+</ngb-toast>
+<ngb-toast *ngIf="show1" class='bg-success text-light' [delay]="3000" [autohide]="autohide1" (hide)="show1 = false; autohide1 = true" >
+    <div *ngIf="autohide1">
+      Record updated
+    </div>
 </ngb-toast>
                       <table class="table table-striped">
                           <thead>
@@ -137,7 +142,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form class="container" [formGroup]="kbase">
+        <form class="container" [formGroup]="kbase" (ngSubmit)="articleSave(kbase.value)">
         <div class="modal-body">
             <div class="form-group">
               <label><b>Article name</b></label>
@@ -146,11 +151,14 @@
               </div>
               <label><b>Category</b></label>
               <div class="input-group">
-                <input class="form-control" formControlName="categoryId">
+                  <select formControlName="categoryId" class="form-control">
+                      <option>Choose your category</option>
+                      <option *ngFor="let item of catarr" [value]="item.categoryId">{{item.categoryName}}</option>
+                  </select>
               </div>
               <label><b>Content</b></label>
               <div class="input-group">
-                <input class="form-control" formControlName="content">
+                <input class="form-control" [innerHTML]="content" formControlName="content">
               </div>
             </div>
         </div>
@@ -177,8 +185,8 @@
                 <label><b>Article name</b></label>
                 <div class="input-group">
                   <input class="form-control" formControlName="articleName">
-                  <button *ngIf="kbase.get('articleName').hasError('pattern') && !kbase.get('articleName').pristine" type="button" class="btn btn-outline-secondary mr-2" placement="top" ngbTooltip="Tooltip on top">
-                      Tooltip on top</button>
+                  <!-- <button *ngIf="kbase.get('articleName').hasError('pattern') && !kbase.get('articleName').pristine" type="button" class="btn btn-outline-secondary mr-2" placement="top" ngbTooltip="Tooltip on top">
+                      Tooltip on top</button> -->
                 </div>
                 <label><b>Category</b></label>
                 <div class="input-group">

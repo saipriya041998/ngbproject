@@ -6,12 +6,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ArtserService {
-
   display_url = appconstant.api + 'GetArticles?getall=0&categ=';
   page_url=appconstant.api+'GetArticles?getall=0&categ=&Page=';
   readmore_url=appconstant.api+'GetReadArticle?ArticleId=';
   getcateg=appconstant.api +'GetCategories';
   add_article= appconstant.api+'InsertUpdateKBAricles';
+  update=appconstant.api+'InsertUpdateKBAricles';
   concat:string;
   constructor(private http:HttpClient) { }
   getAllKbArticles(){
@@ -30,5 +30,10 @@ export class ArtserService {
     let body=JSON.stringify(item);
     let head=new HttpHeaders().set('Content-Type','application/json');
     return this.http.post(this.add_article,body, {headers:head});
+  }
+  updateuser(item){
+    let body=JSON.stringify(item);
+    let head=new HttpHeaders().set('Content-Type','application/json');
+    return this.http.post(this.update,body,{headers:head});
   }
 }
