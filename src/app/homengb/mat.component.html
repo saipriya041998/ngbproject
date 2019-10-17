@@ -1,0 +1,193 @@
+<div class="card">
+    <div class="">
+            <!-- <img src="/assets/Annotation 2019-10-16 094708.png" height="50px" width="1915px"> -->
+            <ngb-tabset>
+                <ngb-tab>
+                  <ng-template  ngbTabTitle>Home</ng-template>
+                  <ng-template ngbTabContent>
+                      <ngb-carousel #carousel interval="2000" >
+                          <ng-template ngbSlide *ngFor="let img of images; index as i">
+                            <div class="carousel-caption">
+                              <h3 class="text">Best Articles to Read</h3>
+                            </div>
+                            <div class="picsum-img-wrapper">
+                                <img [src]="img" width="2000px" height="680px" alt="My image {{i + 1}} description">
+                            </div>
+                          </ng-template>
+                        </ngb-carousel>
+                        <div class="card">
+                          <div class="card-body">
+                              <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                                  <ngb-panel>
+                                    <ng-template ngbPanelTitle>
+                                      <span>&#9733; <b>MOST</b> POPULAR ARTICLES &#9733;</span>
+                                    </ng-template>
+                                    <ng-template ngbPanelContent>
+                                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+                                      aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                      sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                      labore sustainable VHS.
+                                    </ng-template>
+                                  </ngb-panel>
+                                </ngb-accordion>
+                          </div>
+                        </div>
+                  </ng-template>
+                </ngb-tab>
+
+                <!--table part-->
+
+                <ngb-tab>
+
+                  <ng-template ngbTabTitle>Articles</ng-template>
+
+                  <ng-template ngbTabContent>
+                      <br>
+                      <!-- <form>
+                          <div class="form-group form-inline">
+                              Full text search: <input class="form-control ml-2"  type="text" />
+                          </div>
+                      </form> -->
+                      <div class="container-fluid">
+                          <button class="btn-primary pull-right" (click)="openAdd(addpop)" ngbButton>Add Article</button>
+                      </div>
+
+                      <table class="table table-striped">
+                          <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Article Id</th>
+                                <th scope="col">Article Name</th>
+                                <th scope="col">Category Name</th>
+                                <th scope="col">Created Date & Time</th>
+                                <th scope="col">Action</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let item of allart; index as i">
+                                <th scope="row">{{ i + 1 }}</th>
+                                <td ><img [src] class="mr-2" style="width: 20px">
+                                  {{ item.articleId | number }}
+                                </td>
+                                <td>{{item.articleName }}</td>
+                                <td>{{item.categoryName }}</td>
+                                <td>{{item.createdDate }}</td>
+                                <td><button class="btn-primary" (click)="openEdit(editpop,item)" ngbButton>Edit</button></td>
+                                <td><button class="btn-secondary" (click)="readmore(content,item)" ngbButton>Read Article</button></td>
+                              </tr>
+                          </tbody>
+                        </table>
+                        <ngb-pagination class="d-flex justify-content-center" *ngIf="pageshow" [collectionSize]="totalitem" [maxSize]=5  [rotate]="true" [(page)]="Page" (pageChange)="showPage([Page])" [boundaryLinks]="true"></ngb-pagination>
+                  </ng-template>
+                </ngb-tab>
+
+                <!--contact part-->
+
+                <ngb-tab>
+                  <ng-template ngbTabTitle>Contact Us</ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+    </div>
+    </div>
+    <br>
+    <!--readmore popup-->
+    <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title"><i></i>Read More!!</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <label><i class="fa fa fa-address-card-o"></i>&nbsp;{{readarr?.articleName}}</label>
+              <div class="input-group">
+              <p><i class="fa fa-clock-o"></i>&nbsp;{{readarr?.createdDate}}</p>
+              </div>
+              <div class="input-group">
+                <p [innerHTML]="readarr?.content"></p>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cross click')">Close</button>
+        </div>
+      </ng-template>
+
+<!--edit popup-->
+
+      <ng-template #editpop let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title"><i></i>Edit Article!</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="container" [formGroup]="kbase">
+        <div class="modal-body">
+            <div class="form-group">
+              <label><b>Article name</b></label>
+              <div class="input-group">
+                <input class="form-control" formControlName="articleName">
+              </div>
+              <label><b>Category</b></label>
+              <div class="input-group">
+                <input class="form-control" formControlName="categoryId">
+              </div>
+              <label><b>Content</b></label>
+              <div class="input-group">
+                <input class="form-control" formControlName="content">
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-primary" (click)="modal.close('Cross click')">Submit</button>
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cross click')">Close</button>
+        </div>
+      </form>
+      </ng-template>
+
+<!--addpopup-->
+
+    <ng-template #addpop let-modal>
+
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title"><i></i>Add Article!</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form class="container" [formGroup]="kbase">
+          <div class="modal-body">
+              <div class="form-group">
+                <label><b>Article name</b></label>
+                <div class="input-group">
+                  <input class="form-control" formControlName="articleName">
+
+  <button *ngIf="kbase.get('articleName').hasError('pattern') && !kbase.get('articleName').pristine" type="button" class="btn btn-outline-secondary mr-2" placement="top" ngbTooltip="Tooltip on top">
+                      Tooltip on top
+                    </button>
+                </div>
+                <label><b>Category</b></label>
+                <div class="input-group">
+                  <!-- <input class="form-control" formControlName="categoryId"> -->
+               <select formControlName="categoryId" class="form-control">
+                 <option>Choose your category</option>
+                 <option *ngFor="let item of catarr" [value]="item.categoryId">{{item.categoryName}}</option>
+               </select>
+              </div>
+                <label><b>Content</b></label>
+                <div class="input-group">
+                  <input class="form-control" formControlName="content">
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-primary" (click)="modal.close('Cross click')">Submit</button>
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cross click')">Close</button>
+          </div>
+        </form>
+      </ng-template>

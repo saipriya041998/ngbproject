@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+import { appconstant } from './app.constant';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ArtserService {
+
+  display_url = appconstant.api + 'GetArticles?getall=0&categ=';
+  page_url=appconstant.api+'GetArticles?getall=0&categ=&Page=';
+  readmore_url=appconstant.api+'GetReadArticle?ArticleId=';
+  getcateg=appconstant.api +'GetCategories';
+  concat:string;
+  constructor(private http:HttpClient) { }
+  getAllKbArticles(){
+    return this.http.get(this.display_url);
+  }
+  getpagebynumber(num){
+    return this.http.get(this.page_url+num);
+  }
+  getarticlebyid(item){
+    return this.http.get(this.readmore_url+item);
+  }
+  getcategories(){
+    return this.http.get(this.getcateg);
+  }
+}
