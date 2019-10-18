@@ -44,4 +44,32 @@ export class ArtserService {
     return this.http.post(this.update,body,{headers:head});
   }
 
+loggedinuser;
+
+
+  login(useremail:string,userpassword:string){
+    if(useremail=='admin' && userpassword=='123'){
+      this.loggedinuser={
+        useremail:useremail,
+        userpassword:userpassword,
+        admin:true
+      };
+      return ;
+    }
+    this.loggedinuser={
+      useremail:useremail,
+      userpassword:userpassword,
+      admin:false
+    };
+  }
+
+
+  logout(){
+    this.loggedinuser=null;
+  }
+
+  get isLoggedIn():boolean{
+    return !!this.loggedinuser;
+  }
+
 }

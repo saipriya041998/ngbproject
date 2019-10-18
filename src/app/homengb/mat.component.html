@@ -12,7 +12,7 @@
                   <ng-template  ngbTabTitle>Home</ng-template>
                   <ng-template ngbTabContent>
 
-                    <!-------------------ngb toast----------------->
+                    <!-------------------ngb toast for error message----------------->
 
                     <ngb-toast *ngIf="show2" class='bg-danger text-light' [delay]="3000" [autohide]="autohide2" (hide)="show2 = false; autohide2 = true" >
                           <div *ngIf="autohide2">
@@ -23,6 +23,11 @@
                       <!---------------end--------------->
 
 
+                    <!-------------ngb taost for user login-------------->
+                    <ngb-toast *ngIf="show3" class='bg-primary text-light' [delay]="3000" [autohide]="autohide3" (hide)="show3 = false; autohide3 = true" >
+                        <div *ngIf="autohide3">Logged In As Admin</div></ngb-toast>
+                        <ngb-toast *ngIf="show4" class='bg-primary text-light' [delay]="3000" [autohide]="autohide4" (hide)="show4 = false; autohide4 = true" >
+                            <div *ngIf="autohide4">Logged In As User</div></ngb-toast>
                       <!--------ngb alert--------->
 
                       <div *ngIf="display">
@@ -44,57 +49,13 @@
                             </div>
                           </ng-template>
                         </ngb-carousel>
-                        <div class="card">
-                          <div class="card-body">
-                            <div class="card">
-                              <div class="card-body">
-                                  <ngb-accordion #acc="ngbAccordion">
-                                      <ngb-panel id="toggle-1" title="Latest Articles">
-                                        <ng-template ngbPanelContent>
-                                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-                                          aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                                          sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                          craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-                                          occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                          labore sustainable VHS.
-                                        </ng-template>
-                                      </ngb-panel>
-                                      <ngb-panel id="toggle-2" title="Racent">
-                                        <ng-template ngbPanelContent>
-                                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-                                          aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                                          sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                          craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-                                          occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                          labore sustainable VHS.
-                                        </ng-template>
-                                      </ngb-panel>
-                                    </ngb-accordion>
-                              </div>
-                            </div>
-                              <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-                                  <ngb-panel>
-                                    <ng-template ngbPanelTitle>
-                                      <span>&#9733; <b>MOST</b> POPULAR ARTICLES &#9733;</span>
-                                    </ng-template>
-                                    <ng-template ngbPanelContent>
-                                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-                                      aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                                      sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-                                      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                      labore sustainable VHS.
-                                    </ng-template>
-                                  </ngb-panel>
-                                </ngb-accordion>
-                          </div>
-                        </div>
+
                   </ng-template>
                 </ngb-tab>
 
                 <!---------------table part-------------->
 
-                <ngb-tab>
+                <ngb-tab *ngIf="isLoggedIn()">
                   <ng-template ngbTabTitle>Articles</ng-template>
                   <ng-template ngbTabContent>
                       <br>
@@ -143,7 +104,40 @@
                   </ng-template>
                 </ngb-tab>
 
-                <!--------------contact page------------------->
+                <!--------------About Us---------------->
+
+                <ngb-tab>
+                    <ng-template ngbTabTitle>About Us</ng-template>
+                    <ng-template ngbTabContent>
+                        <div class="card">
+                            <div class="card-body">
+                              <div class="card">
+                                <div class="card-body">
+                                  <h4>About</h4>
+                                </div>
+                              </div>
+                                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                                    <ngb-panel>
+                                      <ng-template ngbPanelTitle>
+                                        <span>&#9733; <b>MOST</b> POPULAR ARTICLES &#9733;</span>
+                                      </ng-template>
+                                      <ng-template ngbPanelContent>
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+                                        aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                        craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                        labore sustainable VHS.
+                                      </ng-template>
+                                    </ngb-panel>
+                                  </ngb-accordion>
+                            </div>
+                          </div>
+                    </ng-template>
+                  </ngb-tab>
+
+
+    <!--------------contact page------------------->
 
                 <ngb-tab>
                   <ng-template ngbTabTitle>Contact Us</ng-template>
@@ -167,7 +161,7 @@
                               </div>
                               <div class="form-group">
                                   <button class="btn-primary">Send Message</button>
-                                </div>
+                              </div>
 
                         <p> It's that compelling content that's crucial to making inbound marketing work for your business.</p>
                         <p>So how do you balance your remarkable content creation with your web design needs? It all starts with the "Contact Us" page.</p>
@@ -175,7 +169,41 @@
                 </div>
                   </ng-template>
                 </ngb-tab>
-
+                <ngb-tab *ngIf="!isLoggedIn()">
+                  <br>
+                  <ng-template ngbTabTitle>Log In</ng-template>
+                  <ng-template ngbTabContent>
+                     <h5 style="text-align: center;">LOGIN HERE</h5>
+                      <div class="container">
+                        <form [formGroup]="login" (ngSubmit)="onLoginSubmit()"  >
+                          <div class="form-group" >
+                            <label  >User Name</label>
+                            <input formControlName="useremail" class="form-control" type="text" placeholder="Enter User Name">
+                            <label  class="alert alert-danger" *ngIf="login.get('useremail').hasError('required') && !login.get('useremail').pristine"></label>
+                          </div>
+                          <div class="form-group" >
+                              <label  >Password</label>
+                              <input formControlName="userpassword" class="form-control" type="password" placeholder="Enter Password">
+                              <label  class="alert alert-danger" *ngIf="login.get('userpassword').hasError('required') && !login.get('userpassword').pristine"></label>
+                          </div>
+                            <div class="form-group" >
+                              <button type="submit" class="btn btn-primary" [disabled]="!login.valid" >login</button>
+                            </div>
+                        </form>
+                      </div>
+                  </ng-template>
+                  </ngb-tab>
+                  <ngb-tab *ngIf="isLoggedIn()">
+                      <ng-template ngbTabTitle><label (click)="onLogOut()" ngbButtonLabel class="btn-primary">Log Out
+                          <!-- <input ngbButton type="">Log Out -->
+                          <!-- <button >Log out</button> -->
+                        </label></ng-template>
+                      <!-- <ng-template ngbTabContent>
+                          <label (click)="onLogOut()" ngbButtonLabel class="btn-primary">
+                              <input ngbButton type="button" >Log Out
+                            </label>
+                        </ng-template> -->
+                      </ngb-tab>
             </ngb-tabset>
     </div>
     </div>

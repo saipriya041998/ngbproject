@@ -34,6 +34,7 @@ arr3:Kbarticle[]=[];
 page:number;
 pageshow:boolean=false;
 kbase:FormGroup;
+login:FormGroup;
 closeResult:string;
 catarr:Ddlcategory[];
 show = false;
@@ -42,6 +43,10 @@ show1 = false;
 autohide1=true;
 show2=false;
 autohide2=true;
+show3=false;
+autohide3=true;
+show4=false;
+autohide4=true;
 alerts: Alert[];
 display:boolean=false;
   constructor(private fb:FormBuilder,private data:ArtserService,private modalService:NgbModal,private config:NgbModalConfig) {
@@ -74,6 +79,11 @@ display:boolean=false;
       modifiedByName: new FormControl(),
       modifiedDate:new FormControl()
     });
+    this.login=this.fb.group({
+      useremail:new FormControl(null,Validators.required),
+      userpassword:new FormControl(null,Validators.required)
+
+    });
 
     this.getPageInfo();
     this.getcat();
@@ -92,7 +102,7 @@ display:boolean=false;
         this.pageshow=true;
       },
       function(error) {
-        alert(error.message);
+        // alert(error.message);
         this.display = true;
         this.show2 = true;
       },
@@ -221,4 +231,29 @@ display:boolean=false;
     }
   );
   }
+
+//Login method
+
+  onLoginSubmit(){
+    this.data.login(
+      this.login.value.useremail,
+      this.login.value.userpassword
+    );
+    if(this.data.loggedinuser.admin){
+      console.log(this.data.loggedinuser);
+     this.show3=true;
+    }else{
+     this.show4=true;
+    }
+
+  }
+  isLoggedIn(){
+    return this.data.isLoggedIn;
+  }
+  onLogOut(){
+
+    this.data.logout();
+
+  }
+
 }
