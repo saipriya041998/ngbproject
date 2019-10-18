@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { ArtserService } from '../artser.service';
 import { Kbarticle } from '../kbarticles';
 import { Pageinfo } from '../pagerinfo';
@@ -6,6 +6,16 @@ import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ddlcategory } from '../ddlcategories';
 
+interface Alert {
+  type: string;
+  message: string;
+}
+const ALERTS: Alert[] = [
+  {
+    type: 'danger',
+    message: 'Something went wrong',
+  }
+];
 @Component({
   selector: 'app-mat',
   templateUrl: './mat.component.html',
@@ -32,16 +42,28 @@ show1 = false;
 autohide1=true;
 show2=false;
 autohide2=true;
+alerts: Alert[];
+display:boolean=false;
   constructor(private fb:FormBuilder,private data:ArtserService,private modalService:NgbModal,private config:NgbModalConfig) {
     config.backdrop='static';
     config.keyboard=false;
+    this.reset();
+  }
+  close(alert: Alert) {
+    this.alerts.splice(this.alerts.indexOf(alert), 1);
+  }
+
+  reset() {
+    this.alerts = Array.from(ALERTS);
   }
   ngOnInit() {
+
     this.getArticles();
+
     this.kbase=this.fb.group({
       articleId:new FormControl(),
-      articleName:new FormControl(null,Validators.pattern('[ a-zA-Z]*')),
-      content:new FormControl(),
+      articleName:new FormControl(null,[Validators.pattern('[ a-zA-Z]*'),Validators.required]),
+      content:new FormControl(null,[Validators.pattern('[ a-zA-Z]*'),Validators.required]),
       previewContent:new FormControl(),
       categoryId:new FormControl(),
       categoryName: new FormControl(),
@@ -52,22 +74,37 @@ autohide2=true;
       modifiedByName: new FormControl(),
       modifiedDate:new FormControl()
     });
+
     this.getPageInfo();
     this.getcat();
+
   }
+
+  // get all articles
+
   getArticles() {
+
     this.data.getAllKbArticles().subscribe(
+
       (data:Kbarticle[])=>{
         this.art=data;
         this.allart=this.art['kbArticles'];
         this.pageshow=true;
-      },function(error){
-        this.show2=true;
-      },function(){
+      },
+      function(error) {
+        alert(error.message);
+        this.display = true;
+        this.show2 = true;
+      },
+      function() {
       }
     );
   }
+
+  // getpage info
+
   getPageInfo(){
+
     this.data.getAllKbArticles().subscribe(
       (data:Kbarticle[])=>{
         this.art=data;
@@ -75,9 +112,12 @@ autohide2=true;
         console.log(this.pageart);
         this.totalitem=this.pageart.totalItems;
         this.totalpage=this.pageart.totalPages;
-      }
-    );
-  }
+    }
+  );
+}
+
+  // load new page
+
   showPage(num){
     console.log(num);
     // this.page=num[0];
@@ -92,6 +132,9 @@ autohide2=true;
       );
     }
   }
+
+  // readmore popup open
+
   readmore(content,item){
     this.modalService.open(content, {
       size:'xl'
@@ -104,6 +147,7 @@ autohide2=true;
       }
     );
   }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -113,18 +157,25 @@ autohide2=true;
       return  `with: ${reason}`;
     }
   }
+
+  // edit popup open
+
   openEdit(editpop,item){
+    console.log(item.articleId);
     this.modalService.open(editpop, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
     this.kbase.patchValue({
+      articleId:item.articleId,
       articleName:item.articleName,
       categoryId:item.categoryId,
       content:item.content
     });
   }
+  // add popup open
+
   openAdd(addpop){
     this.modalService.open(addpop, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -132,6 +183,9 @@ autohide2=true;
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
+// get categories
+
   getcat(){
     this.data.getcategories().subscribe(
       (data:any)=>{
@@ -140,6 +194,9 @@ autohide2=true;
       }
     );
   }
+
+// add new record
+
   onadd(item){
     this.data.insertrecord(item).subscribe(
       (data:any)=>{
@@ -151,12 +208,13 @@ autohide2=true;
       function(){}
     );
   }
+
+  // update article
+
   articleSave(item){
     console.log(item);
     this.data.updateuser(item).subscribe(
     (data:any)=>{
-      this.art=data;
-      this.allart=this.art['kbArticles'];
       this.show1=true;
       this.getArticles();
       this.modalService.dismissAll();

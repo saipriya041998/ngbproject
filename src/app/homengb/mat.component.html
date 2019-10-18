@@ -1,16 +1,40 @@
 <div class="card">
-    <div class="">
-            <!-- <img src="/assets/Annotation 2019-10-16 094708.png" height="50px" width="1915px"> -->
+    <div>
+            <img src="/assets/Annotation 2019-10-16 094708.png" height="50px" width="1915px">
+
             <ngb-tabset>
+
+
+              <!--------------Home page--------------->
+
+
                 <ngb-tab>
                   <ng-template  ngbTabTitle>Home</ng-template>
                   <ng-template ngbTabContent>
-                      <ngb-toast *ngIf="show2" class='bg-danger text-light' [delay]="3000" [autohide]="autohide2" (hide)="show2 = false; autohide2 = true" >
+
+                    <!-------------------ngb toast----------------->
+
+                    <ngb-toast *ngIf="show2" class='bg-danger text-light' [delay]="3000" [autohide]="autohide2" (hide)="show2 = false; autohide2 = true" >
                           <div *ngIf="autohide2">
                             Somthing Went Wrong
                           </div>
-                      </ngb-toast>
-                      <ngb-carousel #carousel interval="2000" >
+                    </ngb-toast>
+
+                      <!---------------end--------------->
+
+
+                      <!--------ngb alert--------->
+
+                      <div *ngIf="display">
+                          <p *ngFor="let alert of alerts">
+                              <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+                          </p>
+                      </div>
+
+                      <!------------>
+
+
+                      <ngb-carousel #carousel interval="2000">
                           <ng-template ngbSlide *ngFor="let img of images; index as i">
                             <div class="carousel-caption">
                               <h3 class="text">Best Articles to Read</h3>
@@ -22,6 +46,32 @@
                         </ngb-carousel>
                         <div class="card">
                           <div class="card-body">
+                            <div class="card">
+                              <div class="card-body">
+                                  <ngb-accordion #acc="ngbAccordion">
+                                      <ngb-panel id="toggle-1" title="Latest Articles">
+                                        <ng-template ngbPanelContent>
+                                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+                                          aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                          sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                          craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                          occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                          labore sustainable VHS.
+                                        </ng-template>
+                                      </ngb-panel>
+                                      <ngb-panel id="toggle-2" title="Racent">
+                                        <ng-template ngbPanelContent>
+                                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+                                          aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                          sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                          craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                          occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                          labore sustainable VHS.
+                                        </ng-template>
+                                      </ngb-panel>
+                                    </ngb-accordion>
+                              </div>
+                            </div>
                               <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
                                   <ngb-panel>
                                     <ng-template ngbPanelTitle>
@@ -42,35 +92,30 @@
                   </ng-template>
                 </ngb-tab>
 
-                <!--table part-->
+                <!---------------table part-------------->
 
                 <ngb-tab>
-
                   <ng-template ngbTabTitle>Articles</ng-template>
-
                   <ng-template ngbTabContent>
                       <br>
-
-                      <!-- <form>
-                          <div class="form-group form-inline">
-                              Full text search: <input class="form-control ml-2"  type="text" />
-                          </div>
-                      </form> -->
                       <div class="container-fluid">
                           <button class="btn-primary pull-right" (click)="openAdd(addpop)" ngbButton>Add Article</button>
                       </div>
-                      <ngb-toast *ngIf="show" class='bg-success text-light' [delay]="3000" [autohide]="autohide"
-  (hide)="show = false; autohide = true" [class.bg-warning]="!autohide">
-  <div *ngIf="autohide">
-    Record is added
-  </div>
-</ngb-toast>
-<ngb-toast *ngIf="show1" class='bg-success text-light' [delay]="3000" [autohide]="autohide1" (hide)="show1 = false; autohide1 = true" >
-    <div *ngIf="autohide1">
-      Record updated
-    </div>
-</ngb-toast>
-                      <table class="table table-striped">
+
+                      <!--------ngb toast for add------------>
+
+                      <ngb-toast *ngIf="show" class='bg-success text-light' [delay]="3000" [autohide]="autohide" (hide)="show = false; autohide = true" [class.bg-warning]="!autohide">
+                        <div *ngIf="autohide">Record is added</div></ngb-toast>
+                        <!-- -->
+
+                         <!-------ngb toast for edit-------->
+
+                        <ngb-toast *ngIf="show1" class='bg-success text-light' [delay]="3000" [autohide]="autohide1" (hide)="show1 = false; autohide1 = true" >
+                          <div *ngIf="autohide1">Record updated</div></ngb-toast>
+
+                          <!-------------------------->
+
+                          <table class="table table-striped">
                           <thead>
                               <tr>
                                 <th scope="col">#</th>
@@ -85,9 +130,7 @@
                           <tbody>
                               <tr *ngFor="let item of allart; index as i">
                                 <th scope="row">{{ i + 1 }}</th>
-                                <td ><img [src] class="mr-2" style="width: 20px">
-                                  {{ item.articleId | number }}
-                                </td>
+                                <td ><img [src] class="mr-2" style="width: 20px">{{ item.articleId | number }}</td>
                                 <td>{{item.articleName }}</td>
                                 <td>{{item.categoryName }}</td>
                                 <td>{{item.createdDate }}</td>
@@ -100,16 +143,48 @@
                   </ng-template>
                 </ngb-tab>
 
-                <!--contact part-->
+                <!--------------contact page------------------->
 
                 <ngb-tab>
                   <ng-template ngbTabTitle>Contact Us</ng-template>
+                  <ng-template ngbTabContent>
+                <div class="container-fluid">
+                    <div class="jumbotron">
+                        <h1 class="display-4">Contact Us!!</h1>
+                        <p class="lead"></p>
+                        <hr class="my-4">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" placeholder="Enter your name" class="form-control">
+                          </div>
+                          <div class="form-group">
+                              <label>Email Address</label>
+                              <input type="text" placeholder="Enter your email address" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Message</label>
+                                <input type="textarea" placeholder="Enter message" class="form-control">
+                              </div>
+                              <div class="form-group">
+                                  <button class="btn-primary">Send Message</button>
+                                </div>
+
+                        <p> It's that compelling content that's crucial to making inbound marketing work for your business.</p>
+                        <p>So how do you balance your remarkable content creation with your web design needs? It all starts with the "Contact Us" page.</p>
+                      </div>
+                </div>
+                  </ng-template>
                 </ngb-tab>
+
             </ngb-tabset>
     </div>
     </div>
     <br>
-    <!--readmore popup-->
+
+
+    <!-------------readmore popup----------------->
+
+
     <ng-template #content let-modal>
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title"><i></i>Read More!!</h4>
@@ -133,7 +208,7 @@
         </div>
       </ng-template>
 
-<!--edit popup-->
+<!---------------edit popup--------------------->
 
       <ng-template #editpop let-modal>
         <div class="modal-header">
@@ -158,7 +233,7 @@
               </div>
               <label><b>Content</b></label>
               <div class="input-group">
-                <input class="form-control" [innerHTML]="content" formControlName="content">
+                <input class="form-control"  formControlName="content">
               </div>
             </div>
         </div>
@@ -169,10 +244,9 @@
       </form>
       </ng-template>
 
-<!--addpopup-->
+<!------------------addpopup----------------------->
 
     <ng-template #addpop let-modal>
-
           <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title"><i></i>Add Article!</h4>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -187,10 +261,12 @@
                   <input class="form-control" formControlName="articleName">
                   <!-- <button *ngIf="kbase.get('articleName').hasError('pattern') && !kbase.get('articleName').pristine" type="button" class="btn btn-outline-secondary mr-2" placement="top" ngbTooltip="Tooltip on top">
                       Tooltip on top</button> -->
-                </div>
+                  <div>
+                          <label class="alert alert-danger" *ngIf="kbase.get('articleName').hasError('pattern') && !kbase.get('articleName').pristine">Enter only characters</label>
+                  </div>
+                  </div>
                 <label><b>Category</b></label>
                 <div class="input-group">
-                  <!-- <input class="form-control" formControlName="categoryId"> -->
                <select formControlName="categoryId" class="form-control">
                  <option>Choose your category</option>
                  <option *ngFor="let item of catarr" [value]="item.categoryId">{{item.categoryName}}</option>
@@ -199,11 +275,12 @@
                 <label><b>Content</b></label>
                 <div class="input-group">
                   <input class="form-control" formControlName="content">
+                  <label class="alert alert-danger" *ngIf="kbase.get('content').hasError('pattern') && !kbase.get('content').pristine">Enter only characters</label>
                 </div>
               </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-outline-primary" >Submit</button>
+            <button type="submit"  [disabled]="!kbase.valid" class="btn btn-outline-primary" >Submit</button>
             <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cross click')">Close</button>
           </div>
         </form>
