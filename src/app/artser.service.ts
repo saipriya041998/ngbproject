@@ -63,7 +63,6 @@ loggedinuser;
     };
   }
 
-
   logout(){
     this.loggedinuser=null;
   }

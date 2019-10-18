@@ -1,8 +1,8 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ArtserService } from '../artser.service';
 import { Kbarticle } from '../kbarticles';
 import { Pageinfo } from '../pagerinfo';
-import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModalConfig, NgbTabsetConfig, NgbToastConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ddlcategory } from '../ddlcategories';
 
@@ -22,21 +22,21 @@ const ALERTS: Alert[] = [
   styleUrls: ['./mat.component.css']
 })
 export class MatComponent implements OnInit {
-images = [ '/assets/photo-1454165804606-c3d57bc86b40-845x321.jpg','/assets/images (2).jpg', '/assets/images.jpg'];
-art:Kbarticle[];
-allart:Kbarticle[];
-pageart:Pageinfo;
-totalpage:number;
-totalitem:number;
-Page=1;
-readarr:Kbarticle;
-arr3:Kbarticle[]=[];
-page:number;
-pageshow:boolean=false;
-kbase:FormGroup;
-login:FormGroup;
-closeResult:string;
-catarr:Ddlcategory[];
+images = [ '/assets/photo-1454165804606-c3d57bc86b40-845x321.jpg', '/assets/images (2).jpg', '/assets/images.jpg'];
+art: Kbarticle[];
+allart: Kbarticle[];
+pageart: Pageinfo;
+totalpage: number;
+totalitem: number;
+Page= 1;
+readarr: Kbarticle;
+arr3: Kbarticle[]=[];
+page: number;
+pageshow: boolean=false;
+kbase: FormGroup;
+login: FormGroup;
+closeResult: string;
+catarr: Ddlcategory[];
 show = false;
 autohide = true;
 show1 = false;
@@ -49,10 +49,12 @@ show4=false;
 autohide4=true;
 alerts: Alert[];
 display:boolean=false;
-  constructor(private fb:FormBuilder,private data:ArtserService,private modalService:NgbModal,private config:NgbModalConfig) {
+  constructor(private fb:FormBuilder,private data:ArtserService,private con1:NgbToastConfig,private modalService:NgbModal,private config:NgbModalConfig,private con:NgbTabsetConfig) {
     config.backdrop='static';
     config.keyboard=false;
     this.reset();
+    con.justify='start';
+    con.type='tabs';
   }
   close(alert: Alert) {
     this.alerts.splice(this.alerts.indexOf(alert), 1);
@@ -79,10 +81,10 @@ display:boolean=false;
       modifiedByName: new FormControl(),
       modifiedDate:new FormControl()
     });
+
     this.login=this.fb.group({
       useremail:new FormControl(null,Validators.required),
       userpassword:new FormControl(null,Validators.required)
-
     });
 
     this.getPageInfo();
@@ -114,7 +116,6 @@ display:boolean=false;
   // getpage info
 
   getPageInfo(){
-
     this.data.getAllKbArticles().subscribe(
       (data:Kbarticle[])=>{
         this.art=data;
@@ -240,20 +241,23 @@ display:boolean=false;
       this.login.value.userpassword
     );
     if(this.data.loggedinuser.admin){
-      console.log(this.data.loggedinuser);
+    console.log(this.data.loggedinuser);
      this.show3=true;
     }else{
      this.show4=true;
     }
-
   }
+
+// is user logged in
+
   isLoggedIn(){
     return this.data.isLoggedIn;
   }
+
+//log out method
+
   onLogOut(){
-
     this.data.logout();
-
   }
 
 }
