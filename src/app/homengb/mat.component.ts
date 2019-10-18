@@ -5,6 +5,7 @@ import { Pageinfo } from '../pagerinfo';
 import { NgbModal, ModalDismissReasons, NgbModalConfig, NgbTabsetConfig, NgbToastConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ddlcategory } from '../ddlcategories';
+import { Articles } from '../articles';
 
 interface Alert {
   type: string;
@@ -23,16 +24,17 @@ const ALERTS: Alert[] = [
 })
 export class MatComponent implements OnInit {
 images = [ '/assets/photo-1454165804606-c3d57bc86b40-845x321.jpg', '/assets/images (2).jpg', '/assets/images.jpg'];
+
 art: Kbarticle[];
 allart: Kbarticle[];
 pageart: Pageinfo;
 totalpage: number;
 totalitem: number;
-Page= 1;
+Page = 1;
 readarr: Kbarticle;
-arr3: Kbarticle[]=[];
+arr3: Kbarticle[] = [];
 page: number;
-pageshow: boolean=false;
+pageshow: boolean = false;
 kbase: FormGroup;
 login: FormGroup;
 closeResult: string;
@@ -48,13 +50,50 @@ autohide3=true;
 show4=false;
 autohide4=true;
 alerts: Alert[];
+
+arr: any = [];
+
+arrarticle : Articles[]=[
+
+  new Articles(1,'jdjd','chdjd'),
+  new Articles(2,'jbd','hjdf'),
+  new Articles(3,'jbd','hjdf'),
+  new Articles(4,'jbd','hjdf'),
+  new Articles(5,'jbd','hjdf'),
+  new Articles(6,'jbd','hjdf'),
+  new Articles(7,'jbd','hjdf'),
+  new Articles(8,'jbd','hjdf'),
+  new Articles(9,'jbd','hjdf'),
+  new Articles(10,'jbd','hjdf'),
+  new Articles(11,'jbd','hjdf'),
+  new Articles(12,'jbd','hjdf'),
+  new Articles(13,'jbd','hjdf'),
+  new Articles(14,'jbd','hjdf'),
+  new Articles(15,'jbd','hjdf'),
+  new Articles(16,'jbd','hjdf'),
+  new Articles(17,'jbd','hjdf'),
+  new Articles(18,'jbd','hjdf'),
+  new Articles(19,'jbd','hjdf'),
+  new Articles(20,'jbd','hjdf')
+];
+
+
+
 display:boolean=false;
-  constructor(private fb:FormBuilder,private data:ArtserService,private con1:NgbToastConfig,private modalService:NgbModal,private config:NgbModalConfig,private con:NgbTabsetConfig) {
+  constructor(
+    private fb:FormBuilder,
+    private data:ArtserService,
+    private con1:NgbToastConfig,
+    private modalService:NgbModal,
+    private config:NgbModalConfig,
+    private con:NgbTabsetConfig)
+    {
     config.backdrop='static';
     config.keyboard=false;
     this.reset();
     con.justify='start';
     con.type='tabs';
+    con.orientation='horizontal';
   }
   close(alert: Alert) {
     this.alerts.splice(this.alerts.indexOf(alert), 1);
@@ -63,6 +102,7 @@ display:boolean=false;
   reset() {
     this.alerts = Array.from(ALERTS);
   }
+
   ngOnInit() {
 
     this.getArticles();
@@ -256,8 +296,28 @@ display:boolean=false;
 
 //log out method
 
-  onLogOut(){
+  onLogOut() {
     this.data.logout();
   }
 
+//delete the records from static array
+
+  selcheckbox(item) {
+    console.log(item);
+    this.arr.push(item);
+    console.log(this.arr.length);
+  }
+
+  onseldelete() {
+    var result = confirm("Are you sure?");
+    if (result) {
+      for(let i=0;i<this.arr.length;i++)
+      {
+        if(this.arrarticle.find(x=>x==this.arr[i]))
+        {
+          this.arrarticle.splice(this.arrarticle.indexOf(this.arr[i]),1);
+        }
+      }
+    }
+  }
 }

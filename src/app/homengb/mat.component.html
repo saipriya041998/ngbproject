@@ -2,13 +2,12 @@
 
 <!-- <div class="card">
     <div class="card-body"> -->
-            <img src="/assets/Annotation 2019-10-16 094708.png" height="50px" width="1915px">
-
+            <!-- <img src="/assets/Annotation 2019-10-16 094708.png" height="50px" width="1915px"> -->
+            <h1 class="nav">SkyCliff IT</h1>
             <ngb-tabset>
 
 
               <!--------------Home page--------------->
-
 
                 <ngb-tab >
                   <ng-template  ngbTabTitle><b>Home</b></ng-template>
@@ -44,7 +43,7 @@
                       <ngb-carousel #carousel interval="2000">
                           <ng-template ngbSlide *ngFor="let img of images; index as i">
                             <div class="carousel-caption">
-                              <h3 class="text"><b>Best Articles to Read</b></h3>
+                              <h3 class="text">Best Articles to Read</h3>
                             </div>
                             <div class="picsum-img-wrapper">
                                 <img [src]="img" width="2000px" height="800px" alt="My image {{i + 1}} description">
@@ -105,6 +104,43 @@
                   </ng-template>
                 </ngb-tab>
 
+
+<!-------------delete multiple records----------------->
+
+
+<ngb-tab *ngIf="isLoggedIn()">
+    <ng-template ngbTabTitle><b>Delete articles</b></ng-template>
+    <ng-template ngbTabContent>
+        <br>
+        <button class="btn-primary" (click)="onseldelete()">Delete</button>
+        <br>
+            <table class="table table-striped">
+            <thead>
+                <tr>
+                <th >Action</th>
+                  <th scope="col">Article Id</th>
+                  <th scope="col">Article Name</th>
+                  <th scope="col">content</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of arrarticle">
+                  <td><input type="checkbox" (click)="selcheckbox(item)" ></td>
+                  <td>{{item.art_id}}</td>
+                  <td>{{item.art_name}}</td>
+                  <td>{{item.content}}</td>
+                  <td></td>
+                </tr>
+            </tbody>
+          </table>
+    </ng-template>
+  </ngb-tab>
+
+
+<!--------------------->
+
+
+
                 <!--------------About Us---------------->
 
                 <ngb-tab>
@@ -136,7 +172,6 @@
                               </div>
                             </div>
                       </div>
-
                     </ng-template>
                   </ngb-tab>
 
@@ -166,7 +201,6 @@
                               <div class="form-group">
                                   <button class="btn-primary">Send Message</button>
                               </div>
-
                         <p> It's that compelling content that's crucial to making inbound marketing work for your business.</p>
                         <p>So how do you balance your remarkable content creation with your web design needs? It all starts with the "Contact Us" page.</p>
                       </div>
@@ -177,7 +211,6 @@
                   <br>
                   <ng-template ngbTabTitle><b>Log In</b></ng-template>
                   <ng-template ngbTabContent>
-
                      <h3 style="text-align: center;">LOGIN HERE</h3>
                       <div class="container">
                         <form [formGroup]="login" (ngSubmit)="onLoginSubmit()"  >
