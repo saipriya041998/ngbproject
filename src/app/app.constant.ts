@@ -1,3 +1,3 @@
 export const appconstant={
-  api:'https://5f0c803e.ngrok.io/api/KB/'
+  api:'https://3df52e24.ngrok.io/api/KB/'
 }
