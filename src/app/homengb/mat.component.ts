@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ArtserService } from '../artser.service';
 import { Kbarticle } from '../kbarticles';
 import { Pageinfo } from '../pagerinfo';
-import { NgbModal, ModalDismissReasons, NgbModalConfig, NgbTabsetConfig, NgbToastConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModalConfig, NgbTabsetConfig, NgbToastConfig, NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ddlcategory } from '../ddlcategories';
 import { Articles } from '../articles';
@@ -23,6 +23,9 @@ const ALERTS: Alert[] = [
   styleUrls: ['./mat.component.css']
 })
 export class MatComponent implements OnInit {
+
+ctrl = new FormControl(null, Validators.required);
+
 images = ['/assets/photo-1454165804606-c3d57bc86b40-845x321.jpg', '/assets/images (2).jpg', '/assets/images.jpg'];
 
 art: Kbarticle[];
@@ -50,6 +53,7 @@ autohide3=true;
 show4=false;
 autohide4=true;
 alerts: Alert[];
+currentRate = 0;
 
 arr: any = [];
 
@@ -78,7 +82,6 @@ arrarticle : Articles[]=[
 ];
 
 
-
 display:boolean=false;
   constructor(
     private fb:FormBuilder,
@@ -86,7 +89,8 @@ display:boolean=false;
     private con1:NgbToastConfig,
     private modalService:NgbModal,
     private config:NgbModalConfig,
-    private con:NgbTabsetConfig)
+    private con:NgbTabsetConfig,
+    private conn:NgbRatingConfig)
     {
     config.backdrop='static';
     config.keyboard=false;
@@ -94,6 +98,7 @@ display:boolean=false;
     con.justify='start';
     con.type='tabs';
     con.orientation='horizontal';
+    // conn.max=5;
   }
   close(alert: Alert) {
     this.alerts.splice(this.alerts.indexOf(alert), 1);

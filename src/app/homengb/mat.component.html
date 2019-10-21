@@ -117,28 +117,28 @@
             <table class="table table-striped">
             <thead>
                 <tr>
-                <th >Action</th>
                   <th scope="col">Article Id</th>
                   <th scope="col">Article Name</th>
                   <th scope="col">content</th>
+                  <th >Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let item of arrarticle">
-                  <td><input type="checkbox" (click)="selcheckbox(item)" ></td>
                   <td>{{item.art_id}}</td>
                   <td>{{item.art_name}}</td>
                   <td>{{item.content}}</td>
+                  <td><input type="checkbox" (click)="selcheckbox(item)" ></td>
                   <td></td>
                 </tr>
             </tbody>
           </table>
     </ng-template>
-  </ngb-tab>
+</ngb-tab>
+
 
 
 <!--------------------->
-
 
 
                 <!--------------About Us---------------->
@@ -178,7 +178,7 @@
 
     <!--------------contact page------------------->
 
-                <ngb-tab *ngIf="isLoggedIn()">
+              <ngb-tab *ngIf="isLoggedIn()">
                   <ng-template ngbTabTitle><b>Contact Us</b></ng-template>
                   <ng-template ngbTabContent>
                 <div class="container-fluid">
@@ -203,10 +203,25 @@
                               </div>
                         <p> It's that compelling content that's crucial to making inbound marketing work for your business.</p>
                         <p>So how do you balance your remarkable content creation with your web design needs? It all starts with the "Contact Us" page.</p>
+                        <h1 class="display-4">Rate Us</h1>
+                        <h1>
+                            <ngb-rating [max]='5' [(rate)]="currentRate" [formControl]="ctrl"></ngb-rating>
+                            <div class="form-text small">
+                                <div *ngIf="ctrl.valid" class="text-success">Thanks!!</div>
+                                <div *ngIf="ctrl.invalid" class="text-danger">Please rate us</div>
+                              </div>
+                        </h1>
+                        <hr>
+                        <h1>
+                            <pre>Rate: <b>{{currentRate}}</b></pre>
+                        </h1>
                       </div>
                 </div>
                   </ng-template>
-                </ngb-tab>
+              </ngb-tab>
+
+<!-------------Login part------------------>
+
                 <ngb-tab *ngIf="!isLoggedIn()">
                   <br>
                   <ng-template ngbTabTitle><b>Log In</b></ng-template>
@@ -231,6 +246,11 @@
                       </div>
                   </ng-template>
                   </ngb-tab>
+
+
+<!----------Logout part------------>
+
+
                   <ngb-tab *ngIf="isLoggedIn()">
                       <ng-template ngbTabTitle><a (click)="onLogOut()" class="primary"><b>Log Out</b>
                           <!-- <input ngbButton type="">Log Out -->
