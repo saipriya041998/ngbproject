@@ -15,11 +15,7 @@
 
                     <!-------------------ngb toast for error message----------------->
 
-                    <ngb-toast *ngIf="show2" class='bg-danger text-light' [delay]="3000" [autohide]="autohide2" (hide)="show2 = false; autohide2 = true" >
-                          <div *ngIf="autohide2">
-                            Somthing Went Wrong
-                          </div>
-                    </ngb-toast>
+
 
                       <!---------------end--------------->
 
@@ -67,6 +63,7 @@
 
                       <ngb-toast *ngIf="show" class='bg-success text-light' [delay]="3000" [autohide]="autohide" (hide)="show = false; autohide = true" [class.bg-warning]="!autohide">
                         <div *ngIf="autohide">Record is added</div></ngb-toast>
+
                         <!-- -->
 
                          <!-------ngb toast for edit-------->
@@ -222,28 +219,42 @@
 
 <!-------------Login part------------------>
 
+
                 <ngb-tab *ngIf="!isLoggedIn()">
                   <br>
                   <ng-template ngbTabTitle><b>Log In</b></ng-template>
                   <ng-template ngbTabContent>
-                     <h3 style="text-align: center;">LOGIN HERE</h3>
-                      <div class="container">
-                        <form [formGroup]="login" (ngSubmit)="onLoginSubmit()"  >
-                          <div class="form-group" >
-                            <label><b>User Name</b></label>
-                            <input formControlName="useremail" class="form-control" type="text" placeholder="Enter User Name">
-                            <label  class="alert alert-danger" *ngIf="login.get('useremail').hasError('required') && !login.get('useremail').pristine">username is required</label>
-                          </div>
-                          <div class="form-group" >
-                              <label><b>Password</b></label>
-                              <input formControlName="userpassword" class="form-control" type="password" placeholder="Enter Password">
-                              <label class="alert alert-danger" *ngIf="login.get('userpassword').hasError('required') && !login.get('userpassword').pristine">password is required</label>
-                          </div>
-                            <div class="form-group" >
-                              <button type="submit" class="btn btn-primary" [disabled]="!login.valid"><b>Login</b></button>
+                    <br>
+                    <div class="container">
+                        <ngb-toast *ngIf="show2" class='bg-success text-light' [delay]="3000" [autohide]="autohide2" (hide)="show2 = false; autohide2 = true" >
+                            <div *ngIf="autohide2">
+                              Successfully created your account
                             </div>
-                        </form>
-                      </div>
+                        </ngb-toast>
+                          <div class="pull-right">
+                              <button class="btn btn-sm btn-outline-primary" (click)="open(sign)" ><b>New User</b></button>
+                          </div>
+                         <h3 style="text-align: center;">LOGIN HERE</h3>
+                          <div class="container">
+                            <form [formGroup]="login" (ngSubmit)="onLoginSubmit()"  >
+                              <div class="form-group" >
+                                <label><b>User Name <span style="color: red;">*</span></b></label>
+                                <input formControlName="useremail" ngbTooltip="Enter user name" class="form-control" type="text">
+                                <label  class="alert alert-danger" *ngIf="login.get('useremail').hasError('required') && !login.get('useremail').pristine">username is required</label>
+                                <label class="alert alert-danger" *ngIf="login.get('useremail').hasError('pattern') && !login.get('useremail').pristine">Only characters are allowed</label>
+                              </div>
+                              <div class="form-group" >
+                                  <label><b>Password <span style="color: red;">*</span></b></label>
+                                  <input formControlName="userpassword" ngbTooltip="Enter password" class="form-control" type="password">
+                                  <label class="alert alert-danger" *ngIf="login.get('userpassword').hasError('required') && !login.get('userpassword').pristine">password is required</label>
+                                  <label class="alert alert-danger" *ngIf="login.get('userpassword').hasError('pattern') && !login.get('userpassword').pristine">Enter correct password</label>
+                              </div>
+                                <div class="form-group" >
+                                  <button type="submit" class="btn btn-sm btn-outline-primary" [disabled]="!login.valid"><b>Login</b></button>
+                                </div>
+                            </form>
+                          </div>
+                    </div>
                   </ng-template>
                   </ngb-tab>
 
@@ -290,7 +301,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cross click')">Close</button>
+          <button type="button" class="btn  btn-outline-dark" (click)="modal.close('Cross click')">Close</button>
         </div>
       </ng-template>
 
@@ -370,4 +381,63 @@
             <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cross click')">Close</button>
           </div>
         </form>
+      </ng-template>
+
+
+
+      <!--------------sign up form--------------------->
+
+
+
+      <ng-template #sign let-modal>
+        <div class="modal-header">
+          <h3 class="modal-title" id="modal-basic-title">Sign up</h3>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="signup" (ngSubmit)="savenewuser(signup.value)">
+            <div class="form-group">
+              <label>User Name <span style="color: red;">*</span></label>
+              <div class="input-group">
+                <input formControlName="username" class="form-control" ngbTooltip="Enter User name">
+                <div class="container">
+                    <label class="alert alert-danger" *ngIf="signup.get('username').hasError('required') && !signup.get('username').pristine">User name is required</label>
+                </div>
+                <div class="container">
+                    <label class="alert alert-danger" *ngIf="signup.get('username').hasError('pattern') && !signup.get('username').pristine">Enter in correct Format</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+                <label>Email Id <span style="color: red;">*</span></label>
+                <div class="input-group">
+                  <input class="form-control" type='email' formControlName="email" ngbTooltip="Enter Email Id">
+                  <div class="container">
+                      <label class="alert alert-danger"  *ngIf="signup.get('email').hasError('required') && !signup.get('email').pristine">Email is required</label>
+                  </div>
+                  <div class="container">
+                      <label class="alert alert-danger" *ngIf="signup.get('email').hasError('pattern') && !signup.get('email').pristine">Enter in correct Format</label>
+                  </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password <span style="color: red;">*</span></label>
+                <div class="input-group">
+                  <input class="form-control" formControlName="password" ngbTooltip="Enter Password">
+                  <div class="conatiner">
+                      <label class="alert alert-danger" *ngIf="signup.get('password').hasError('required') && !signup.get('password').pristine">Password is required</label>
+                  </div>
+                  <div class="container">
+                      <label class="alert alert-danger" *ngIf="signup.get('password').hasError('pattern') && !signup.get('password').pristine">Enter in correct format</label>
+                  </div>
+                </div>
+            </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-outline-primary" [disabled]='!signup.valid'>Save</button>
+                  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+              </div>
+          </form>
+        </div>
       </ng-template>

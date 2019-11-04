@@ -45,6 +45,7 @@ export class ArtserService {
   }
 
 loggedinuser;
+signupuser;
 
 
   login(useremail:string,userpassword:string){
@@ -67,8 +68,16 @@ loggedinuser;
     this.loggedinuser=null;
   }
 
-  get isLoggedIn():boolean{
+  get isLoggedIn():boolean {
     return !!this.loggedinuser;
+  }
+  sign(username:string, email:string, password:string){
+    this.signupuser={
+      username:username,
+      email:email,
+      password:password
+    };
+console.log(this.signupuser);
   }
 
 }

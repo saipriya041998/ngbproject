@@ -54,7 +54,7 @@ show4=false;
 autohide4=true;
 alerts: Alert[];
 currentRate = 0;
-
+signup: FormGroup;
 arr: any = [];
 
 arrarticle : Articles[]=[
@@ -127,9 +127,15 @@ display:boolean=false;
       modifiedDate:new FormControl()
     });
 
-    this.login=this.fb.group({
-      useremail:new FormControl(null,Validators.required),
-      userpassword:new FormControl(null,Validators.required)
+    this.login = this.fb.group({
+      useremail: new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z]*')] ),
+      userpassword: new FormControl(null, [Validators.required,Validators.pattern('[a-zA-Z0-9@.]*')])
+    });
+
+    this.signup = this.fb.group({
+      username: new FormControl(null,[Validators.required,Validators.pattern('[a-zA-z]*')]),
+      email: new FormControl(null,[Validators.required,Validators.pattern('[a-zA-z0-9@.]*')]),
+      password: new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z0-9@.]*')])
     });
 
     this.getPageInfo();
@@ -140,9 +146,7 @@ display:boolean=false;
   // get all articles
 
   getArticles() {
-
     this.data.getAllKbArticles().subscribe(
-
       (data:Kbarticle[])=>{
         this.art=data;
         this.allart=this.art['kbArticles'];
@@ -151,7 +155,7 @@ display:boolean=false;
       function(error) {
         // alert(error.message);
         this.display = true;
-        this.show2 = true;
+        // this.show2 = true;
       },
       function() {
       }
@@ -324,5 +328,22 @@ display:boolean=false;
         }
       }
     }
+  }
+  open(signup){
+    this.modalService.open(signup,{
+      size:'xl'
+    });
+  }
+
+  savenewuser(signup) {
+    console.log(signup);
+    this.data.sign(
+      this.signup.value.username,
+      this.signup.value.email,
+      this.signup.value.password
+    );
+    this.show2 = true;
+    this.signup.reset();
+    this.modalService.dismissAll();
   }
 }
