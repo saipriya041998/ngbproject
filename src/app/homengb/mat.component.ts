@@ -56,7 +56,7 @@ alerts: Alert[];
 currentRate = 0;
 signup: FormGroup;
 arr: any = [];
-va:any;
+uname:any;
 
 arrarticle : Articles[]=[
 
@@ -344,7 +344,7 @@ display:boolean=false;
       this.signup.value.password
     );
     this.show2 = true;
-    this.va=this.data.signupuser.username;
+    this.uname = this.data.signupuser.username;
     this.signup.reset();
     this.modalService.dismissAll();
   }
