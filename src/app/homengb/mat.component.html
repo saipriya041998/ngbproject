@@ -24,7 +24,7 @@
                     <ngb-toast *ngIf="show3" class='bg-primary text-light' [delay]="2000" [autohide]="autohide3" (hide)="show3 = false; autohide3 = true" >
                         <div *ngIf="autohide3">Logged In As Admin</div></ngb-toast>
                       <ngb-toast *ngIf="show4" class='bg-primary text-light' [delay]="2000" [autohide]="autohide4" (hide)="show4 = false; autohide4 = true" >
-                            <div *ngIf="autohide4">Logged In As User</div></ngb-toast>
+                            <div *ngIf="autohide4">{{this.va}} is logged in Successfully</div></ngb-toast>
                       <!--------ngb alert--------->
 
                       <div *ngIf="display">
@@ -185,15 +185,15 @@
                         <hr class="my-4">
                         <div class="form-group">
                             <label>Your Name</label>
-                            <input type="text" placeholder="Enter your name" class="form-control">
+                            <input type="text" ngbTooltip="Enter name" class="form-control">
                           </div>
                           <div class="form-group">
                               <label>Email Address</label>
-                              <input type="text" placeholder="Enter your email address" class="form-control">
+                              <input type="text" ngbTooltip="Enter email address" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Message</label>
-                                <input type="textarea" placeholder="Enter message" class="form-control">
+                                <input type="textarea" ngbTooltip="Enter message" class="form-control">
                               </div>
                               <div class="form-group">
                                   <button class="btn-primary">Send Message</button>
@@ -238,7 +238,7 @@
                           <div class="container">
                             <form [formGroup]="login" (ngSubmit)="onLoginSubmit()"  >
                               <div class="form-group" >
-                                <label><b>User Name <span style="color: red;">*</span></b></label>
+                                <label><b>User Email <span style="color: red;">*</span></b></label>
                                 <input formControlName="useremail" ngbTooltip="Enter user name" class="form-control" type="text">
                                 <label  class="alert alert-danger" *ngIf="login.get('useremail').hasError('required') && !login.get('useremail').pristine">username is required</label>
                                 <label class="alert alert-danger" *ngIf="login.get('useremail').hasError('pattern') && !login.get('useremail').pristine">Only characters are allowed</label>
@@ -319,7 +319,7 @@
             <div class="form-group">
               <label><b>Article name</b></label>
               <div class="input-group">
-                <input class="form-control" formControlName="articleName">
+                <input class="form-control" ngbTooltip="Enter article name" formControlName="articleName">
               </div>
               <label><b>Category</b></label>
               <div class="input-group">
@@ -330,7 +330,7 @@
               </div>
               <label><b>Content</b></label>
               <div class="input-group">
-                <input class="form-control"  formControlName="content">
+                <input class="form-control" ngbTooltip="Enter content"  formControlName="content">
               </div>
             </div>
         </div>
@@ -355,7 +355,7 @@
               <div class="form-group">
                 <label><b>Article name</b></label>
                 <div class="input-group">
-                  <input class="form-control" formControlName="articleName">
+                  <input class="form-control" ngbTooltip="Enter Article name" formControlName="articleName">
                   <!-- <button *ngIf="kbase.get('articleName').hasError('pattern') && !kbase.get('articleName').pristine" type="button" class="btn btn-outline-secondary mr-2" placement="top" ngbTooltip="Tooltip on top">
                       Tooltip on top</button> -->
                   <div>
@@ -371,7 +371,7 @@
               </div>
                 <label><b>Content</b></label>
                 <div class="input-group">
-                  <input class="form-control" formControlName="content">
+                  <input class="form-control" ngbTooltip="Enter content" formControlName="content">
                   <label class="alert alert-danger" *ngIf="kbase.get('content').hasError('pattern') && !kbase.get('content').pristine">Enter only characters</label>
                 </div>
               </div>
@@ -386,8 +386,6 @@
 
 
       <!--------------sign up form--------------------->
-
-
 
       <ng-template #sign let-modal>
         <div class="modal-header">
@@ -425,7 +423,7 @@
             <div class="form-group">
                 <label>Password <span style="color: red;">*</span></label>
                 <div class="input-group">
-                  <input class="form-control" formControlName="password" ngbTooltip="Enter Password">
+                  <input type='password' class="form-control" formControlName="password" ngbTooltip="Enter Password">
                   <div class="conatiner">
                       <label class="alert alert-danger" *ngIf="signup.get('password').hasError('required') && !signup.get('password').pristine">Password is required</label>
                   </div>

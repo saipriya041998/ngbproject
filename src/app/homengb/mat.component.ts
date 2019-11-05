@@ -56,6 +56,7 @@ alerts: Alert[];
 currentRate = 0;
 signup: FormGroup;
 arr: any = [];
+va:any;
 
 arrarticle : Articles[]=[
 
@@ -128,7 +129,7 @@ display:boolean=false;
     });
 
     this.login = this.fb.group({
-      useremail: new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z]*')] ),
+      useremail: new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z0-9@.]*')] ),
       userpassword: new FormControl(null, [Validators.required,Validators.pattern('[a-zA-Z0-9@.]*')])
     });
 
@@ -344,6 +345,7 @@ display:boolean=false;
     );
     this.show2 = true;
     this.signup.reset();
+    this.va=this.data.signupuser.email;
     this.modalService.dismissAll();
   }
 }
