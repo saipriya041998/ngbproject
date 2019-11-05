@@ -344,8 +344,8 @@ display:boolean=false;
       this.signup.value.password
     );
     this.show2 = true;
+    this.va=this.data.signupuser.username;
     this.signup.reset();
-    this.va=this.data.signupuser.email;
     this.modalService.dismissAll();
   }
 }

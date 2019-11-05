@@ -59,10 +59,10 @@ signupuser;
       return ;
     }
     else if (useremail === this.signupuser.email && userpassword === this.signupuser.password) {
-       this.loggedinuser={
-        useremail:useremail,
-        userpassword:userpassword,
-        admin:false
+       this.loggedinuser = {
+        useremail: useremail,
+        userpassword: userpassword,
+        admin: false
     };
       // alert('  '+this.signupuser.email+' is logged in ');
     } else {
