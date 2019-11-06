@@ -57,6 +57,7 @@ currentRate = 0;
 signup: FormGroup;
 arr: any = [];
 uname:any;
+disp:boolean=false;
 
 arrarticle : Articles[]=[
 
@@ -283,19 +284,20 @@ display:boolean=false;
   );
   }
 
-//Login method
+// Login method
 
   onLoginSubmit(){
     this.data.login(
       this.login.value.useremail,
       this.login.value.userpassword
     );
-    // if(this.data.loggedinuser.admin){
-    // console.log(this.data.loggedinuser);
-    //  this.show3=true;
-    // }else{
-    //  this.show4=true;
-    // }
+    if(this.data.loggedinuser.admin){
+    console.log(this.data.loggedinuser);
+    this.disp=true;
+     this.show3 =true;
+    }else{
+     this.show4=true;
+    }
   }
 
 // is user logged in
@@ -304,7 +306,7 @@ display:boolean=false;
     return this.data.isLoggedIn;
   }
 
-//log out method
+// log out method
 
   onLogOut() {
     this.data.logout();

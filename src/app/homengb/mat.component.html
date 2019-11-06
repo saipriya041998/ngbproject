@@ -9,7 +9,7 @@
 
               <!--------------Home page--------------->
 
-                <ngb-tab >
+                <ngb-tab>
                   <ng-template  ngbTabTitle><b>Home</b></ng-template>
                   <ng-template ngbTabContent>
 
@@ -136,6 +136,41 @@
 
 
 <!--------------------->
+
+<!--------------------Admin part------------------------->
+
+
+
+<ngb-tab *ngIf="disp">
+  <ng-template ngbTabTitle><b>View Details</b></ng-template>
+  <ng-template ngbTabContent>
+    <div>
+        <div class="card">
+            <div class="card-body">
+              <div class="card">
+                <div class="card-body">
+                  <h4>Users display</h4>
+                </div>
+              </div>
+                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                    <ngb-panel>
+                      <ng-template ngbPanelTitle>
+                        <span>&#9733; <b>MOST</b> POPULAR ARTICLES &#9733;</span>
+                      </ng-template>
+                      <ng-template ngbPanelContent>
+
+                      </ng-template>
+                    </ngb-panel>
+                  </ngb-accordion>
+            </div>
+          </div>
+    </div>
+  </ng-template>
+</ngb-tab>
+
+
+<!----------------------------------->
+
 
 
                 <!--------------About Us---------------->
@@ -277,6 +312,10 @@
     <!-- </div>
     </div> -->
     <br>
+
+
+      <!--------------------pop up------------------------->
+
 
 
     <!-------------readmore popup----------------->

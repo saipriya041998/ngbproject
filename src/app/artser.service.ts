@@ -13,7 +13,11 @@ export class ArtserService {
   add_article = appconstant.api + 'InsertUpdateKBAricles';
   update = appconstant.api + 'InsertUpdateKBAricles';
   concat: string;
+  loggedinuser;
+  signupuser;
   constructor(private http: HttpClient) { }
+
+// to get all records to display
 
   getAllKbArticles(){
     return this.http.get(this.display_url);
@@ -30,7 +34,6 @@ export class ArtserService {
   getcategories(){
     return this.http.get(this.getcateg);
   }
-
   insertrecord(item){
     let body = JSON.stringify(item);
     let head = new HttpHeaders().set('Content-Type', 'application/json');
@@ -44,8 +47,6 @@ export class ArtserService {
     return this.http.post(this.update, body, {headers: head});
   }
 
-loggedinuser;
-signupuser;
 
 
   login(useremail: string, userpassword: string){
