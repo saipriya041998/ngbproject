@@ -129,8 +129,8 @@ display:boolean=false;
     });
 
     this.login = this.fb.group({
-      useremail: new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z0-9@.]*')] ),
-      userpassword: new FormControl(null, [Validators.required,Validators.pattern('[a-zA-Z0-9@.]*')])
+      useremail: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z0-9@.]*')] ),
+      userpassword: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z0-9@.]*')])
     });
 
     this.signup = this.fb.group({
@@ -290,12 +290,12 @@ display:boolean=false;
       this.login.value.useremail,
       this.login.value.userpassword
     );
-    if(this.data.loggedinuser.admin){
-    console.log(this.data.loggedinuser);
-     this.show3=true;
-    }else{
-     this.show4=true;
-    }
+    // if(this.data.loggedinuser.admin){
+    // console.log(this.data.loggedinuser);
+    //  this.show3=true;
+    // }else{
+    //  this.show4=true;
+    // }
   }
 
 // is user logged in

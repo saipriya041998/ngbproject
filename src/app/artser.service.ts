@@ -64,7 +64,7 @@ signupuser;
         userpassword: userpassword,
         admin: false
     };
-      // alert('  '+this.signupuser.email+' is logged in ');
+      alert('  '+this.signupuser.email+' is logged in ');
     } else {
       alert('Please signup before login');
     }
