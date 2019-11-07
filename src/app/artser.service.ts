@@ -47,8 +47,6 @@ export class ArtserService {
     return this.http.post(this.update, body, {headers: head});
   }
 
-
-
   login(useremail: string, userpassword: string){
     if (useremail === 'admin' && userpassword === '123'){
       this.loggedinuser = {
@@ -56,7 +54,6 @@ export class ArtserService {
         userpassword: userpassword,
         admin: true
       };
-      // alert('admin is logged in');
       return ;
     }
     else if (useremail === this.signupuser.email && userpassword === this.signupuser.password) {
@@ -65,14 +62,13 @@ export class ArtserService {
         userpassword: userpassword,
         admin: false
     };
-      alert('  '+this.signupuser.email+' is logged in ');
+      // alert('  '+this.signupuser.email+' is logged in ');
     } else {
-      alert('Please signup before login');
+      alert('this user is not registered');
     }
-
   }
 
-  logout(){
+  logout() {
     this.loggedinuser = null;
   }
 

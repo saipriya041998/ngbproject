@@ -2,7 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ArtserService } from '../artser.service';
 import { Kbarticle } from '../kbarticles';
 import { Pageinfo } from '../pagerinfo';
-import { NgbModal, ModalDismissReasons, NgbModalConfig, NgbTabsetConfig, NgbToastConfig, NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal,
+        ModalDismissReasons,
+        NgbModalConfig,
+        NgbTabsetConfig,
+        NgbToastConfig,
+        NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ddlcategory } from '../ddlcategories';
 import { Articles } from '../articles';
@@ -57,7 +62,7 @@ currentRate = 0;
 signup: FormGroup;
 arr: any = [];
 uname:any;
-disp:boolean=false;
+disp:boolean =false;
 
 arrarticle : Articles[]=[
 
@@ -276,7 +281,7 @@ display:boolean=false;
   articleSave(item){
     console.log(item);
     this.data.updateuser(item).subscribe(
-    (data:any)=>{
+    (data: any)=>{
       this.show1=true;
       this.getArticles();
       this.modalService.dismissAll();
@@ -286,7 +291,7 @@ display:boolean=false;
 
 // Login method
 
-  onLoginSubmit(){
+  onLoginSubmit() {
     this.data.login(
       this.login.value.useremail,
       this.login.value.userpassword
@@ -294,7 +299,7 @@ display:boolean=false;
     if(this.data.loggedinuser.admin){
     console.log(this.data.loggedinuser);
     this.disp=true;
-     this.show3 =true;
+     this.show3=true;
     }else{
      this.show4=true;
     }
@@ -302,7 +307,7 @@ display:boolean=false;
 
 // is user logged in
 
-  isLoggedIn(){
+  isLoggedIn() {
     return this.data.isLoggedIn;
   }
 
@@ -312,7 +317,7 @@ display:boolean=false;
     this.data.logout();
   }
 
-//delete the records from static array
+// delete the records from static array
 
   selcheckbox(item) {
     console.log(item);
@@ -334,12 +339,12 @@ display:boolean=false;
   }
   open(signup){
     this.modalService.open(signup,{
-      size:'xl'
+      size: 'xl'
     });
   }
 
   savenewuser(signup) {
-    console.log(signup);
+    // console.log(signup);
     this.data.sign(
       this.signup.value.username,
       this.signup.value.email,
